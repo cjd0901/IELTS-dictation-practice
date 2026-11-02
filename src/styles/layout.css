@@ -65,6 +65,20 @@ body,
   flex-shrink: 0;
 }
 
+.audio-toolbar {
+  height: auto;
+  min-height: 56px;
+  flex-wrap: wrap;
+}
+
+.audio-toolbar > * {
+  flex-shrink: 0;
+}
+
+.app-shell .audio-source-select {
+  min-width: 128px;
+}
+
 .goal-input-wrap {
   position: relative;
   display: inline-flex;
@@ -186,7 +200,8 @@ body,
   }
 
   .practice-screen .audio-toolbar {
-    height: 52px;
+    height: auto;
+    min-height: 52px;
     padding: 10px 20px;
   }
 
@@ -214,10 +229,8 @@ body,
 
   .practice-screen .practice-aside {
     min-height: 0;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    scrollbar-width: thin;
-    scrollbar-color: #344a4b transparent;
+    /* The guide shares the page scroll instead of trapping wheel/trackpad gestures. */
+    overflow: visible;
   }
 
   .practice-screen .page-footer {

@@ -40,6 +40,18 @@ export function AudioToolbar(props: Props) {
           <option value="en-US">美式发音</option>
         </select>
       </div>
+      <select
+        className="audio-source-select"
+        aria-label="发音来源"
+        value={settings.audioSource}
+        onChange={(e) => {
+          stop()
+          setSettings({ ...settings, audioSource: e.target.value as Settings['audioSource'] })
+        }}
+      >
+        <option value="local">本地音频</option>
+        <option value="online">在线音频（有道）</option>
+      </select>
       <span className="toolbar-divider" />
       <select
         className="speed-select"

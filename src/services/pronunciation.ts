@@ -1,11 +1,35 @@
 import type { Settings, Word } from '../types/study.ts'
 
 export type SpeechEnvironment = {
-  synthesis?: Pick<SpeechSynthesis, 'cancel' | 'getVoices' | 'speak'>
+  synthesis?: Pick<
+    SpeechSynthesis,
+    'cancel' | 'getVoices' | 'speak' | 'addEventListener' | 'removeEventListener'
+  >
   createUtterance: (text: string) => SpeechSynthesisUtterance
   createAudio: (url: string) => HTMLAudioElement
 }
-type PronunciationSettings = Pick<Settings, 'accent' | 'rate' | 'repeat'>
+type PronunciationSettings = Pick<Settings, 'audioSource' | 'accent' | 'rate' | 'repeat'>
+type VoiceClock = {
+  setTimer: (callback: () => void, delay: number) => ReturnType<typeof setTimeout>
+  clearTimer: (timer: ReturnType<typeof setTimeout>) => void
+}
+const voiceClock: VoiceClock = {
+  setTimer: (callback, delay) => setTimeout(callback, delay),
+  clearTimer: (timer) => clearTimeout(timer),
+}
+const VOICE_WAIT_MS = 2000
+
+function selectVoice(voices: SpeechSynthesisVoice[], accent: Settings['accent']) {
+  const language = (value: string) => value.toLowerCase().replaceAll('_', '-')
+  const english = voices.filter((voice) => /^en(?:-|$)/.test(language(voice.lang)))
+  const matches = (voice: SpeechSynthesisVoice) => language(voice.lang) === language(accent)
+  // Browser speech may expose remote voices too; localService is a preference, not a gate.
+  return (
+    english.find((voice) => matches(voice) && voice.localService) ??
+    english.find(matches) ??
+    english[0]
+  )
+}
 
 export const speechText = (word: string) =>
   word
@@ -22,12 +46,15 @@ export function createPronunciationPlayer(
   onSpeaking: (index: number | null) => void,
   onFailure: (message: string) => void,
   environment: SpeechEnvironment,
+  clock: VoiceClock = voiceClock,
 ) {
   let token = 0
   let audio: HTMLAudioElement | null = null
   let utterance: SpeechSynthesisUtterance | null = null
+  let cancelVoiceWait: (() => void) | null = null
 
   function cancelResources() {
+    cancelVoiceWait?.()
     if (audio) {
       audio.onended = null
       audio.onerror = null
@@ -77,42 +104,79 @@ export function createPronunciationPlayer(
       onFailure(message)
     }
 
-    function fallback() {
+    function playOnline() {
       if (currentToken !== token) return
       const player = environment.createAudio(dictionaryUrl(text, settings.accent))
       player.playbackRate = settings.rate
       audio = player
       player.onended = finish
-      player.onerror = () => fail('发音暂时不可用，请检查网络或切换浏览器语音。')
-      player.play().catch(() => fail('无法播放发音，请检查网络和浏览器声音设置。'))
+      player.onerror = () => fail('在线发音暂时不可用，请检查网络或切换本地音频。')
+      player.play().catch(() => fail('无法播放在线发音，请检查网络和浏览器声音设置。'))
     }
 
     function say() {
       if (currentToken !== token) return
+      if (settings.audioSource === 'online') {
+        playOnline()
+        return
+      }
       const synthesis = environment.synthesis
       if (!synthesis) {
-        fallback()
+        fail('当前浏览器不支持语音播放，请切换在线音频。')
         return
       }
-      const voices = synthesis.getVoices()
-      const voice =
-        voices.find((item) => item.lang === settings.accent && item.localService) ??
-        voices.find((item) => item.lang === settings.accent) ??
-        voices.find((item) => item.lang.startsWith('en'))
-      if (!voice) {
-        fallback()
+
+      const speakVoice = (voice: SpeechSynthesisVoice) => {
+        if (currentToken !== token) return
+        const next = environment.createUtterance(text)
+        utterance = next
+        next.lang = settings.accent
+        next.voice = voice
+        next.rate = settings.rate
+        next.onend = finish
+        next.onerror = (event) => {
+          if (event.error !== 'canceled' && event.error !== 'interrupted') {
+            fail('本地发音失败，请切换在线音频或检查系统语音设置。')
+          }
+        }
+        synthesis.speak(next)
+      }
+
+      const voice = selectVoice(synthesis.getVoices(), settings.accent)
+      if (voice) {
+        speakVoice(voice)
         return
       }
-      const next = environment.createUtterance(text)
-      utterance = next
-      next.lang = settings.accent
-      next.voice = voice
-      next.rate = settings.rate
-      next.onend = finish
-      next.onerror = (event) => {
-        if (event.error !== 'canceled' && event.error !== 'interrupted') fallback()
+
+      // Voice enumeration can be empty on first use, or populate in several batches.
+      let settled = false
+      let timer: ReturnType<typeof setTimeout> | undefined
+      const cleanup = () => {
+        settled = true
+        synthesis.removeEventListener('voiceschanged', onVoicesChanged)
+        if (timer !== undefined) clock.clearTimer(timer)
+        timer = undefined
+        if (cancelVoiceWait === cleanup) cancelVoiceWait = null
       }
-      synthesis.speak(next)
+      const onVoicesChanged = () => {
+        if (settled || currentToken !== token) return
+        const loaded = selectVoice(synthesis.getVoices(), settings.accent)
+        if (loaded) {
+          cleanup()
+          speakVoice(loaded)
+        }
+      }
+      cancelVoiceWait = cleanup
+      synthesis.addEventListener('voiceschanged', onVoicesChanged)
+      timer = clock.setTimer(() => {
+        if (settled || currentToken !== token) return
+        const loaded = selectVoice(synthesis.getVoices(), settings.accent)
+        cleanup()
+        if (loaded) speakVoice(loaded)
+        else fail('暂未获取到英语语音，请稍后重试或切换在线音频。')
+      }, VOICE_WAIT_MS)
+      // Recheck after listening so a list populated during registration is not missed.
+      onVoicesChanged()
     }
 
     say()
@@ -122,8 +186,10 @@ export function createPronunciationPlayer(
 }
 
 export function browserSpeechEnvironment(): SpeechEnvironment {
+  const synthesis = 'speechSynthesis' in window ? window.speechSynthesis : undefined
+  synthesis?.getVoices()
   return {
-    synthesis: 'speechSynthesis' in window ? window.speechSynthesis : undefined,
+    synthesis,
     createUtterance: (text) => new SpeechSynthesisUtterance(text),
     createAudio: (url) => new Audio(url),
   }

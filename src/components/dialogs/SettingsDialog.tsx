@@ -47,6 +47,19 @@ export function SettingsDialog(props: Props) {
           )}
         </div>
         <label>
+          发音来源
+          <select
+            value={settings.audioSource}
+            onChange={(e) => {
+              stop()
+              setSettings({ ...settings, audioSource: e.target.value as Settings['audioSource'] })
+            }}
+          >
+            <option value="local">本地音频</option>
+            <option value="online">在线音频（有道）</option>
+          </select>
+        </label>
+        <label>
           发音口音
           <select
             value={settings.accent}
@@ -97,7 +110,7 @@ export function SettingsDialog(props: Props) {
           className="outline-button"
           onClick={() => {
             stop()
-            pronounce({ id: 'test', w: 'Welcome to your listening practice', m: '', p: '' }, -1)
+            pronounce({ id: 'test', w: 'practice', m: '', p: '' }, -1)
           }}
         >
           <Icon name="volume" size={16} />
