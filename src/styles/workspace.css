@@ -26,9 +26,10 @@
   letter-spacing: 0.5px;
 }
 .brand-title {
+  font: inherit;
   white-space: nowrap;
 }
-.brand > span:nth-child(2) {
+.brand > .brand-title {
   line-height: 1.25;
 }
 .brand small {
@@ -1853,7 +1854,7 @@ main {
     margin: 0 0 37px;
     gap: 0;
   }
-  .brand > span:nth-child(2),
+  .brand > .brand-title,
   .brand-dot,
   .sidebar-label,
   .nav-item > span,

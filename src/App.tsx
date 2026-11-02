@@ -31,6 +31,7 @@ export default function App() {
           {view === 'history' && <HistoryPage {...app} />}
           <footer className="page-footer">
             <span>仅供个人学习</span>
+            <a href={`${import.meta.env.BASE_URL}guide.html`}>功能介绍</a>
           </footer>
         </main>
       </div>

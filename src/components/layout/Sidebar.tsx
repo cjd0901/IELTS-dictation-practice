@@ -23,7 +23,7 @@ export function Sidebar(props: Props) {
         <span className="brand-mark">
           <Wave small />
         </span>
-        <span className="brand-title">雅思听写练习</span>
+        <h1 className="brand-title">雅思听写练习</h1>
       </a>
       <div className="sidebar-label">
         学习空间 <span>WORKSPACE</span>
