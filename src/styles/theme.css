@@ -1,0 +1,674 @@
+:root {
+  color-scheme: dark;
+  background: #0e141b;
+  color: #dce6eb;
+}
+.app-shell {
+  --line: #28333c;
+  --teal: #47b5a2;
+}
+.sidebar,
+.topbar {
+  background: #121b23;
+  border-color: #26333c;
+}
+.brand {
+  color: #e2ebe9;
+}
+.brand-mark {
+  background: #277f73;
+}
+.brand small,
+.brand-dot {
+  color: #73858d;
+}
+.sidebar-label {
+  color: #6b7e89;
+}
+.sidebar-label > span {
+  color: #475c67;
+}
+.nav-item {
+  color: #8c9fa9;
+}
+.nav-item.active {
+  background: #1b3435;
+  color: #78c8b6;
+}
+.nav-item:hover {
+  background: #1b2b32;
+}
+.nav-active-dot {
+  background: #6bbca8;
+}
+.nav-item b {
+  background: #293b42;
+  color: #8fa8b2;
+}
+.sidebar-library > button {
+  background: #152129;
+  border-color: #293840;
+  color: #b4c7c9;
+}
+.sidebar-library small {
+  color: #6c858f;
+}
+.mini-book {
+  background: #233930;
+  color: #8dae87;
+}
+.daily-goal {
+  background: #162329;
+  border-color: #2b383e;
+}
+.goal-top > span {
+  color: #9db0a1;
+}
+.goal-top svg,
+.goal-top b {
+  color: #90b88a;
+}
+.goal-top em {
+  color: #597667;
+}
+.progress-track {
+  background: #2a3c37;
+}
+.progress-track i {
+  background: #77a983;
+}
+.daily-goal p {
+  color: #6c8781;
+}
+.sidebar-settings,
+.local-note {
+  color: #6e8791;
+}
+.local-note > span,
+.saved > span {
+  background: #5ba393;
+}
+.breadcrumbs {
+  color: #667d89;
+}
+.breadcrumbs strong {
+  color: #a9bac2;
+}
+.breadcrumbs svg {
+  color: #445c68;
+}
+.saved {
+  color: #7c958d;
+}
+.icon-button {
+  color: #728d9b;
+}
+.icon-button:hover {
+  background: #22323c;
+  color: #9fc6c1;
+}
+.avatar {
+  background: #2b3d3e;
+  border-color: #121b23;
+  box-shadow: 0 0 0 1px #35484a;
+  color: #a2bcb0;
+}
+.eyebrow {
+  color: #577e84;
+}
+.page-heading h1 {
+  color: #e2e9ec;
+}
+.heading-period {
+  color: #57b7a5;
+}
+.page-heading p {
+  color: #80929c;
+  font-size: 12px;
+}
+.text-button,
+.shortcut-link {
+  color: #829a9f;
+}
+.text-button:hover {
+  color: #6ecbb8;
+}
+.course-banner,
+.practice-card,
+.shortcut-card,
+.library-card,
+.review-table,
+.history-table,
+.history-stats > div {
+  background: #151f28;
+  border-color: #2a363e;
+  box-shadow: 0 3px 15px #0000000a;
+}
+.course-cover {
+  background: #263b36;
+  box-shadow:
+    inset 5px 0 #355148,
+    2px 2px 0 #101c23;
+  color: #9ab5a1;
+}
+.course-info h2 {
+  color: #d4e1df;
+}
+.course-kicker {
+  color: #768c92;
+}
+.course-kicker > span {
+  border-color: #2c4142;
+  color: #79a494;
+}
+.course-info p {
+  color: #7b909a;
+}
+.course-section small {
+  color: #6e858c;
+}
+.course-section strong {
+  color: #abc0b9;
+}
+.outline-button {
+  background: #1a2730;
+  border-color: #34474e;
+  color: #a0b6b4;
+}
+.outline-button:hover {
+  background: #22373a;
+  border-color: #4b796f;
+  color: #a8d6c6;
+}
+.practice-heading h2 {
+  color: #d4e3e0;
+}
+.tag {
+  background: #293c34;
+  color: #a3b596;
+}
+.practice-heading p {
+  color: #7c9298;
+}
+.practice-heading p > span {
+  color: #4e6670;
+}
+.practice-heading p .shuffle-label {
+  background: #233e38;
+  color: #8ebfa8;
+}
+.completion-number strong {
+  color: #94cbb8;
+}
+.completion-number > span,
+.completion-number small {
+  color: #5d8184;
+}
+.practice-progress {
+  background: #22322f;
+}
+.practice-progress > i {
+  background: #49aa94;
+}
+.audio-toolbar {
+  background: #141e25;
+  color: #859e9e;
+}
+.toolbar-select,
+.audio-toolbar select {
+  color: #91aaa3;
+}
+.toolbar-divider {
+  background: #30423f;
+}
+.toolbar-button,
+.auto-control,
+.shuffle-button {
+  color: #809a93;
+}
+.toolbar-button svg {
+  fill: #88a398;
+}
+.toolbar-button.on,
+.shuffle-button.on,
+.auto-control.on {
+  color: #66c5af;
+}
+.switch-track {
+  background: #344d48;
+}
+.switch-track i {
+  background: #8caaa1;
+}
+.auto-control.on .switch-track {
+  background: #388d7a;
+}
+.auto-control.on .switch-track i {
+  background: #c9ece1;
+}
+.notebook-heading {
+  color: #7d939c;
+  border-color: #273640;
+}
+.notebook-heading > span:last-child {
+  color: #586f7a;
+}
+.word-list {
+  scrollbar-color: #344a4b transparent;
+}
+.word-row {
+  border-color: #25333d;
+}
+.word-row.current {
+  background: #1b3032;
+}
+.word-row.current:before {
+  background: #5db39f;
+}
+.row-number {
+  color: #4d6572;
+}
+.word-row.current .row-number {
+  color: #69a897;
+}
+.word-field input {
+  color: #d0e4e4;
+  font-size: 16px;
+}
+.word-field input::placeholder {
+  color: #526b78;
+  font-size: 12px;
+}
+.word-row.current input::placeholder {
+  color: #74968f;
+}
+.row-sound {
+  color: #496672;
+}
+.word-row.current .row-sound {
+  color: #6cb7a2;
+}
+.row-sound:hover,
+.row-sound.playing {
+  color: #8dd7c3;
+  background: #24463e;
+}
+.practice-actions {
+  background: #151f28;
+  border-color: #2a3d42;
+}
+.action-hint {
+  color: #6d8d8e;
+}
+.action-hint kbd {
+  background: #1c2b31;
+  border-color: #30464a;
+  color: #85aaa0;
+}
+.status-dot {
+  background: #4a7270;
+}
+.reset-button {
+  color: #7a9396;
+}
+.primary-button {
+  background: #318f7e;
+  border-color: #3a9a88;
+  color: #f2faf7;
+  box-shadow: 0 2px 8px #00000015;
+}
+.primary-button:hover {
+  background: #3ba58f;
+  border-color: #4cae9b;
+}
+.group-navigation,
+.group-arrow {
+  color: #6d8b91;
+}
+.group-navigation select {
+  background: #19262e;
+  border-color: #2d4147;
+  color: #8ea8a4;
+}
+.focus-card {
+  background: #1a2c2b;
+  border-color: #30413a;
+}
+.focus-card-top,
+.live-label {
+  color: #799b88;
+}
+.live-label i {
+  background: #79a98b;
+}
+.orbit {
+  border-color: #344a3d;
+}
+.focus-disc {
+  background: #2c4237;
+  box-shadow: inset 0 0 0 7px #263b33;
+  color: #87ad8d;
+}
+.note,
+.spark {
+  color: #719775;
+}
+.focus-card h3 {
+  color: #a8bda6;
+}
+.focus-card > p {
+  color: #789780;
+}
+.focus-card-bottom {
+  color: #57765f;
+  border-color: #324637;
+}
+.focus-card-bottom > span {
+  background: #678b6b;
+}
+.aside-card-heading {
+  color: #7c9b8e;
+}
+.aside-card-heading h3 {
+  color: #b0c5b8;
+}
+.shortcut-row {
+  color: #839c95;
+}
+.shortcut-row kbd {
+  background: #1c2c2d;
+  border-color: #35483f;
+  color: #a4baa9;
+}
+.shortcut-row kbd b,
+.key-combo em {
+  color: #5f7e70;
+}
+.shortcut-note {
+  border-color: #293b36;
+  color: #698579;
+}
+.shortcut-note p {
+  color: #6e8b7e;
+}
+.shortcut-note strong {
+  color: #a2bca5;
+}
+.learning-tip h3 {
+  color: #a49e7f;
+}
+.learning-tip p {
+  color: #7e887b;
+}
+.learning-tip > span {
+  color: #5d7167;
+}
+.tip-icon {
+  color: #9a8c63;
+}
+.page-footer {
+  border-color: #25363d;
+  color: #506973;
+}
+.page-footer a {
+  color: #6c898e;
+}
+.page-footer .wave {
+  color: #4a7271;
+}
+.result-banner {
+  background: #1a3330;
+  border-color: #2c4d43;
+}
+.result-icon {
+  background: #294e40;
+  color: #9dc8a9;
+}
+.result-banner strong {
+  color: #accfb8;
+}
+.result-banner p {
+  color: #749d88;
+}
+.result-banner > .text-button {
+  color: #8bc3a5;
+}
+.word-list.graded .word-row {
+  min-height: 61px;
+}
+.word-list.graded .word-row.correct,
+.word-list.graded .word-row.incorrect {
+  min-height: 96px;
+}
+.word-list.graded .word-field input {
+  font-size: 15px;
+  padding: 8px 0;
+}
+.word-row.incorrect input {
+  color: #db9e91;
+  text-decoration-color: #ad7265;
+}
+.word-row.correct input {
+  color: #9ecfae;
+}
+.word-answer strong {
+  color: #b4d6bc;
+  font-size: 13px;
+}
+.phonetic {
+  color: #5e8d87;
+}
+.word-meaning {
+  color: #88a89d;
+  font-size: 11px;
+}
+.row-verdict.right {
+  background: #253f35;
+  color: #8fb897;
+}
+.row-verdict.wrong {
+  background: #3b2c2b;
+  color: #d09a86;
+}
+.empty-inline {
+  color: #8fbe9b;
+}
+.section-bar h2 {
+  color: #c6d8d7;
+}
+.section-bar p,
+.table-note {
+  color: #6f8b8c;
+}
+.library-card:hover {
+  border-color: #4f7a6a;
+  box-shadow: 0 6px 15px #00000015;
+}
+.library-book {
+  background: #283c32;
+  color: #8fa984;
+}
+.library-card h3 {
+  color: #c0d4c5;
+}
+.library-card p {
+  color: #72968c;
+}
+.library-card-bottom {
+  border-color: #2a3e39;
+  color: #89a991;
+}
+.search-box {
+  background: #16232c;
+  border-color: #2d4147;
+  color: #6c9294;
+}
+.search-box input {
+  color: #b0cbc4;
+}
+.search-box input::placeholder {
+  color: #627e82;
+}
+.review-word {
+  border-color: #283d41;
+}
+.review-word strong {
+  color: #bed5c9;
+}
+.review-word small {
+  color: #658e85;
+}
+.review-word > span:nth-last-child(2) {
+  color: #92b09c;
+}
+.empty-state {
+  background: #131e26;
+  border-color: #33473d;
+}
+.empty-state > span {
+  background: #283c31;
+  color: #89aa7e;
+}
+.empty-state h3 {
+  color: #adc5aa;
+}
+.empty-state p {
+  color: #718d80;
+}
+.history-stats > div > span {
+  color: #7e9c8b;
+}
+.history-stats strong {
+  color: #b0d2b3;
+}
+.history-stats small {
+  color: #688f7c;
+}
+.history-row {
+  border-color: #293c3b;
+  color: #99b6a9;
+}
+.history-row:hover {
+  background: #1e3230;
+}
+.history-header {
+  background: #152521;
+  color: #6b8b78;
+}
+.history-score {
+  color: #89c0a0;
+}
+.modal {
+  background: #152129;
+  border-color: #33463f;
+  color: #c3d8cd;
+  box-shadow: 0 25px 100px #00000070;
+}
+.modal::backdrop {
+  background: #050b10aa;
+}
+.modal-description {
+  color: #829d90;
+}
+.chapter-option {
+  border-color: #30443c;
+}
+.chapter-option:hover,
+.chapter-option.selected {
+  background: #233d32;
+  border-color: #54765b;
+}
+.chapter-option-icon {
+  background: #283e30;
+  color: #96b682;
+}
+.chapter-option small,
+.chapter-word-count,
+.chapter-option > svg {
+  color: #82a580;
+}
+.help-list > div {
+  border-color: #2e4038;
+  color: #8da992;
+}
+.help-list kbd {
+  background: #26392d;
+  border-color: #40553a;
+  color: #b3c5a0;
+}
+.help-note {
+  background: #1c3027;
+  color: #8fa98b;
+}
+.settings-form label {
+  color: #98b28f;
+}
+.settings-form select {
+  background: #22342a;
+  border-color: #40533b;
+  color: #a5b89a;
+}
+.settings-bottom {
+  border-color: #344938;
+}
+.settings-note {
+  color: #708b72;
+}
+.detail-word {
+  border-color: #2c4135;
+  color: #97b389;
+}
+.detail-word strong {
+  color: #bcd4ba;
+}
+.detail-word small {
+  color: #72937b;
+}
+.detail-word > span {
+  color: #93ae90;
+}
+.shortcut-card {
+  padding: 23px 20px 0;
+}
+.shortcut-card .aside-card-heading {
+  margin-bottom: 25px;
+}
+.shortcut-card .aside-card-heading h3 {
+  font-size: 13px;
+  font-weight: 500;
+}
+.shortcut-card .shortcut-row {
+  margin-bottom: 21px;
+  font-size: 10px;
+}
+.shortcut-card .shortcut-note {
+  margin-top: 3px;
+  padding: 17px 0;
+}
+.shortcut-card .shortcut-note p {
+  font-size: 10px;
+  line-height: 1.9;
+}
+@media (max-width: 1020px) {
+  .practice-aside {
+    display: block;
+  }
+  .shortcut-card {
+    width: 100%;
+  }
+}
+@media (max-width: 760px) {
+  .page-heading p {
+    font-size: 10px;
+  }
+  .word-field input::placeholder {
+    font-size: 11px;
+  }
+  .avatar {
+    border-color: #121b23;
+  }
+}
+
+.practice-card .word-list {
+  max-height: clamp(560px, calc(100dvh - 490px), 1000px);
+}

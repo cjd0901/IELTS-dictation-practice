@@ -1,0 +1,33 @@
+import vocabulary from './vocabulary.json'
+
+export type Word = { id: string; w: string; p: string; m: string }
+export type Session = { chapter: string; group: number; words: Word[]; answers: string[]; checked: boolean[]; graded: boolean; review: boolean; shuffled: boolean }
+export type RecordEntry = { id: string; date: string; chapter: string; group: number; words: Word[]; answers: string[]; correct: number; review: boolean }
+export type Settings = { accent: 'en-GB' | 'en-US'; rate: number; auto: boolean; repeat: number; dailyGoal: number }
+export const isValidDailyGoal = (value: unknown): value is number => typeof value === 'number' && Number.isSafeInteger(value) && value > 0
+export const CHAPTERS = Object.fromEntries(Object.entries(vocabulary).map(([key, words]) => [key, words.map((word, index) => ({ ...word, id: `${key}:${index}` }))])) as Record<string, Word[]>
+export const TOTAL = Object.values(CHAPTERS).reduce((sum, words) => sum + words.length, 0)
+export const GROUP_SIZE = 20
+export const chapterTitle = (id: string) => id.startsWith('3') ? '第 3 章 · 名词' : id.startsWith('4') ? '第 4 章 · 形容词与副词' : id.startsWith('5') ? '第 5 章 · 短语' : '第 11 章 · 综合词汇'
+export const chapterSubtitle = (id: string) => id.includes('.2') && !id.startsWith('11') ? '基础词汇' : id.startsWith('11') ? '综合巩固' : '进阶词汇'
+export function newSession(chapter = '3.2', group = 0, words?: Word[]): Session {
+  const selected = words ?? CHAPTERS[chapter].slice(group * GROUP_SIZE, (group + 1) * GROUP_SIZE)
+  return { chapter, group, words: selected, answers: selected.map(() => ''), checked: selected.map(() => false), graded: false, review: !!words, shuffled: false }
+}
+export function load<T>(key: string, fallback: T): T {
+  try { const value = localStorage.getItem(`tingjian:${key}`); return value ? JSON.parse(value) : fallback } catch { return fallback }
+}
+export function save(key: string, value: unknown): boolean {
+  try { localStorage.setItem(`tingjian:${key}`, JSON.stringify(value)); return true } catch { return false }
+}
+export function restoreSession(): Session {
+  const value = load<Session | null>('session', null)
+  if (value && CHAPTERS[value.chapter] && Array.isArray(value.words) && value.words.length > 0 && value.words.length === value.answers?.length && value.words.every(word => typeof word.w === 'string' && typeof word.m === 'string')) return { ...value, checked: value.checked ?? value.answers.map(answer => value.graded && !!answer.trim()), graded: value.words.every((_, i) => (value.checked?.[i] ?? value.graded) && !!value.answers[i].trim()) }
+  return newSession()
+}
+export const normalize = (text: string) => text.trim().toLowerCase().replace(/[’‘]/g, "'").replace(/[‐‑–—]/g, '-').replace(/\s+/g, ' ').replace(/[.!?]+$/, '')
+export function isCorrect(answer: string, word: Word): boolean {
+  if (!answer.trim()) return false
+  return [word.w, ...word.w.split(/\s*(?:=|／|\/)\s*/)].some(value => normalize(value) === normalize(answer))
+}
+export const getCorrect = (session: Pick<Session, 'words' | 'answers'> & { checked?: boolean[] }) => session.words.filter((word, i) => (!session.checked || session.checked[i]) && isCorrect(session.answers[i] ?? '', word)).length

@@ -1,0 +1,221 @@
+html,
+body,
+#root {
+  height: 100%;
+  overflow: hidden;
+}
+
+.app-shell {
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.main-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.topbar {
+  flex-shrink: 0;
+}
+
+.repository-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 32px;
+  padding: 7px 10px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: #92aaa6;
+  font-size: 11px;
+  line-height: 1;
+  white-space: nowrap;
+  transition: color .16s, background-color .16s, border-color .16s;
+}
+
+.repository-link:hover {
+  border-color: #34484e;
+  background-color: #20353a;
+  color: #d6eae3;
+}
+
+.app-content {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  margin: 0 auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #344a4b transparent;
+}
+
+.sidebar {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #344a4b transparent;
+}
+
+.sidebar > * {
+  flex-shrink: 0;
+}
+
+.goal-input-wrap {
+  position: relative;
+  display: inline-flex;
+  width: 185px;
+  flex-shrink: 0;
+}
+
+.settings-form .goal-input {
+  appearance: textfield;
+  width: 100%;
+  height: 40px;
+  padding: 10px 36px 10px 13px;
+  border: 1px solid #34484e;
+  border-radius: 8px;
+  background: #1a2931;
+  color: #c0d5d0;
+  font-size: 12px;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+  transition:
+    border-color 0.16s,
+    box-shadow 0.16s;
+}
+
+.goal-input::-webkit-inner-spin-button,
+.goal-input::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.settings-form .goal-input:focus {
+  border-color: #5bb39c;
+  box-shadow: 0 0 0 3px #5bb39c1c;
+}
+
+.settings-form .goal-input[aria-invalid='true'] {
+  border-color: #c68e7e;
+}
+
+.goal-input-wrap > span {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #76978c;
+  font-size: 11px;
+  pointer-events: none;
+}
+
+.field-error {
+  margin-top: 8px;
+  color: #db9e91;
+  font-size: 11px;
+  text-align: right;
+}
+
+@media (max-width: 760px) {
+  .goal-input-wrap {
+    width: 165px;
+  }
+}
+
+@media (min-width: 1021px) {
+  .topbar {
+    height: 64px;
+  }
+
+  .practice-screen .app-content {
+    display: flex;
+    flex-direction: column;
+    padding-top: 24px;
+    padding-bottom: 16px;
+    overflow: hidden;
+  }
+
+  .practice-screen .course-banner {
+    flex-shrink: 0;
+    margin-bottom: 18px;
+    padding: 16px 22px;
+  }
+
+  .practice-screen .course-cover {
+    height: 60px;
+    width: 52px;
+  }
+
+  .practice-screen .practice-layout {
+    flex: 1;
+    min-height: 0;
+    grid-template-rows: minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .practice-screen .practice-main {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .practice-screen .practice-card {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .practice-screen .practice-card > :not(.word-list) {
+    flex-shrink: 0;
+  }
+
+  .practice-screen .practice-heading {
+    padding: 16px 22px;
+  }
+
+  .practice-screen .audio-toolbar {
+    height: 52px;
+    padding: 10px 20px;
+  }
+
+  .practice-screen .notebook-heading {
+    padding: 12px 22px;
+  }
+
+  .practice-screen .practice-card .word-list {
+    flex: 1 1 0;
+    min-height: 0;
+    max-height: none;
+    overscroll-behavior: contain;
+  }
+
+  .practice-screen .practice-actions {
+    padding: 12px 20px;
+  }
+
+  .practice-screen .group-navigation {
+    flex-shrink: 0;
+    min-height: 32px;
+    margin-top: 12px;
+  }
+
+  .practice-screen .practice-aside {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #344a4b transparent;
+  }
+
+  .practice-screen .page-footer {
+    flex-shrink: 0;
+    margin-top: 18px;
+    padding: 12px 0;
+  }
+}

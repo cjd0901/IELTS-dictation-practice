@@ -1,0 +1,231 @@
+/* Shared styling keeps every selector consistent with the dark workspace. */
+.app-shell select {
+  appearance: none;
+  color-scheme: dark;
+  min-height: 32px;
+  padding: 7px 29px 7px 11px;
+  border: 1px solid #34484e;
+  border-radius: 7px;
+  background-color: #1a2931;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='m3 4.5 3 3 3-3' stroke='%238faea6' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  color: #c0d5d0;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 450;
+  line-height: 1.4;
+  letter-spacing: 0;
+  vertical-align: middle;
+  box-shadow: 0 1px 2px #00000015;
+  transition:
+    border-color 0.16s,
+    background-color 0.16s,
+    box-shadow 0.16s;
+}
+
+.app-shell select:hover:not(:disabled) {
+  background-color: #20353a;
+  border-color: #557e74;
+  color: #d6eae3;
+}
+
+.app-shell select:focus-visible,
+.app-shell select:open {
+  outline: none;
+  border-color: #5bb39c;
+  background-color: #1c3234;
+  box-shadow: 0 0 0 3px #5bb39c1c;
+}
+
+.app-shell select:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.app-shell select option {
+  background-color: #1a2931;
+  color: #bccfc9;
+  font-size: 11px;
+}
+
+.app-shell select option:checked {
+  background-color: #254b40;
+  color: #b7e9d6;
+}
+
+.app-shell .toolbar-select {
+  gap: 8px;
+}
+
+.app-shell .toolbar-select select {
+  min-width: 88px;
+}
+
+.app-shell .speed-select {
+  min-width: 66px;
+  font-variant-numeric: tabular-nums;
+}
+
+.app-shell .group-navigation select {
+  min-width: 94px;
+  font-size: 11px;
+}
+
+.app-shell .settings-form select {
+  width: 185px;
+  min-height: 40px;
+  padding: 10px 32px 10px 13px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+/* Enhanced native pickers retain browser-managed focus and keyboard controls. */
+@supports (appearance: base-select) and selector(select::picker(select)) {
+  .app-shell select,
+  .app-shell select::picker(select) {
+    appearance: base-select;
+  }
+
+  .app-shell select {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-right: 11px;
+    background-image: none;
+  }
+
+  .app-shell .settings-form select {
+    padding-right: 14px;
+  }
+
+  .app-shell select::picker-icon {
+    content: '';
+    flex: 0 0 auto;
+    width: 6px;
+    height: 6px;
+    margin: -3px 2px 0 auto;
+    border-right: 1.5px solid #8faea6;
+    border-bottom: 1.5px solid #8faea6;
+    transform: rotate(45deg);
+    transition:
+      transform 0.16s,
+      border-color 0.16s;
+  }
+
+  .app-shell select:open::picker-icon {
+    border-color: #83cfb6;
+    transform: translateY(3px) rotate(225deg);
+  }
+
+  .app-shell select::picker(select) {
+    min-width: max(126px, anchor-size(width));
+    max-height: min(292px, 50dvh);
+    margin-block: 6px;
+    padding: 5px;
+    overflow-y: auto;
+    border: 1px solid #3a5655;
+    border-radius: 10px;
+    background: #18272e;
+    color: #bed5cd;
+    box-shadow:
+      0 12px 36px #00000055,
+      0 2px 6px #00000020;
+    scrollbar-width: thin;
+    scrollbar-color: #42645a transparent;
+  }
+
+  .app-shell select option {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 35px;
+    padding: 9px 11px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: transparent;
+    font-size: 12px;
+    line-height: 1.4;
+    cursor: pointer;
+  }
+
+  .app-shell select option + option {
+    margin-top: 2px;
+  }
+
+  .app-shell select option:hover,
+  .app-shell select option:focus-visible {
+    outline: none;
+    background-color: #253c3c;
+    color: #e1f0e8;
+  }
+
+  .app-shell select option:checked {
+    border-color: #3c6958;
+    background: #234739;
+    color: #b2e6cb;
+    font-weight: 550;
+  }
+
+  .app-shell select option::checkmark {
+    order: 1;
+    margin-left: auto;
+    color: #8bd5ad;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 760px) {
+  .app-shell .settings-form select {
+    width: 165px;
+  }
+}
+
+@media (max-width: 500px) {
+  .app-shell .audio-toolbar {
+    height: auto;
+    min-height: 54px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .app-shell .audio-toolbar select {
+    min-height: 29px;
+    padding: 6px 22px 6px 8px;
+    background-position: right 7px center;
+    font-size: 9px;
+  }
+
+  .app-shell .toolbar-select {
+    gap: 4px;
+  }
+
+  .app-shell .toolbar-select select {
+    min-width: 75px;
+  }
+
+  .app-shell .speed-select {
+    min-width: 54px;
+  }
+
+  .app-shell .group-navigation select {
+    min-width: 86px;
+    font-size: 10px;
+  }
+
+  @supports (appearance: base-select) and selector(select::picker(select)) {
+    .app-shell .audio-toolbar select {
+      gap: 8px;
+      padding-right: 8px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-shell select,
+  .app-shell select::picker-icon {
+    transition: none;
+  }
+}
