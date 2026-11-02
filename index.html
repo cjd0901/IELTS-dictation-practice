@@ -64,32 +64,24 @@
       }
     </script>
     <style>
-      #app-loading {
-        box-sizing: border-box;
-        max-width: 720px;
-        max-height: 80dvh;
-        margin: 8vh auto;
-        padding: 28px;
-        overflow: auto;
-        color: #dce6eb;
-        background: #152129;
-        border-radius: 12px;
-        font: 16px/1.8 system-ui, sans-serif;
+      :root {
+        color-scheme: dark;
+        background: #0e141b;
       }
-      #app-loading a { color: #8ac7b5; }
-      body { background: #0e141b; }
+      body {
+        margin: 0;
+        background: #0e141b;
+      }
     </style>
   </head>
   <body>
-    <div id="root">
-      <main id="app-loading">
-        <h1>雅思听写练习</h1>
-        <p>基于王陆雅思语料库第3、4、5、11章，收录5,873个词汇、32个小节。</p>
-        <p>支持词汇预习、英美发音、逐行听写、答案批改、音标与中文释义、错词复习和本地学习记录。</p>
-        <p>听写界面正在加载。你也可以先阅读<a href="%BASE_URL%guide.html">功能介绍与使用说明</a>。</p>
-        <noscript><p>听写练习需要启用 JavaScript；功能介绍页无需 JavaScript 即可阅读。</p></noscript>
-      </main>
-    </div>
+    <div id="root"></div>
+    <noscript>
+      <p style="padding: 24px; color: #dce6eb; font-family: system-ui, sans-serif; line-height: 1.8">
+        听写练习需要启用 JavaScript。你也可以阅读
+        <a href="%BASE_URL%guide.html" style="color: #8ac7b5">功能介绍与使用说明</a>。
+      </p>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

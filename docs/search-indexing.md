@@ -5,7 +5,7 @@
 - 首页与功能介绍页的独立标题、描述、canonical 和允许索引的 robots 元信息。
 - WebSite、WebApplication 与功能介绍页的 JSON-LD 结构化数据，内容对应现有功能，不声明评分、评价或官方授权。
 - 无需 JavaScript 即可阅读的 `public/guide.html`，包含真实词库范围、听写批改规则、发音、错词复习、学习记录及本地保存说明；应用页脚提供可抓取入口。
-- 首页加载或 JavaScript 不可用时可见的简介与说明页链接。
+- 仅在 JavaScript 被禁用时显示启用提示与功能介绍页链接；正常加载直接进入听写界面，不展示过渡简介。
 - `public/sitemap.xml` 仅包含首页和功能介绍页。错词本、个人学习记录和各个本地状态视图不作为独立索引网址。
 
 线上地址按当前 GitHub Pages 仓库设置：`https://cjd0901.github.io/IELTS-dictation-practice/`。更换域名或仓库名时，需要同步更新首页、介绍页和站点地图内的绝对网址。构建时继续使用现有 GitHub Pages 部署流程传入的 base 路径。

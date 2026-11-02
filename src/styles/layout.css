@@ -128,6 +128,12 @@ body,
 }
 
 @media (min-width: 1021px) {
+  .practice-screen {
+    --practice-row-height: 61px;
+    /* Six full rows, plus the existing 8px scroll margin at either edge. */
+    --practice-list-height: calc(var(--practice-row-height) * 6 + 16px);
+  }
+
   .topbar {
     height: 64px;
   }
@@ -137,7 +143,7 @@ body,
     flex-direction: column;
     padding-top: 24px;
     padding-bottom: 16px;
-    overflow: hidden;
+    overflow-y: auto;
   }
 
   .practice-screen .course-banner {
@@ -152,23 +158,23 @@ body,
   }
 
   .practice-screen .practice-layout {
-    flex: 1;
-    min-height: 0;
-    grid-template-rows: minmax(0, 1fr);
+    flex: 1 0 auto;
+    min-height: min-content;
+    grid-template-rows: minmax(min-content, 1fr);
     align-items: stretch;
   }
 
   .practice-screen .practice-main {
     display: flex;
     flex-direction: column;
-    min-height: 0;
+    min-height: min-content;
   }
 
   .practice-screen .practice-card {
     display: flex;
     flex-direction: column;
     flex: 1;
-    min-height: 0;
+    min-height: min-content;
   }
 
   .practice-screen .practice-card > :not(.word-list) {
@@ -189,8 +195,9 @@ body,
   }
 
   .practice-screen .practice-card .word-list {
-    flex: 1 1 0;
-    min-height: 0;
+    flex: 1 0 var(--practice-list-height);
+    height: var(--practice-list-height);
+    min-height: var(--practice-list-height);
     max-height: none;
     overscroll-behavior: contain;
   }
@@ -217,5 +224,11 @@ body,
     flex-shrink: 0;
     margin-top: 18px;
     padding: 12px 0;
+  }
+}
+
+@media (min-width: 1500px) {
+  .practice-screen {
+    --practice-row-height: 67px;
   }
 }
