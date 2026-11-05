@@ -1,4 +1,5 @@
 import { Icon } from '../ui/Icon.tsx'
+import { LocalVoiceSelect } from '../ui/LocalVoiceSelect.tsx'
 import type { DictationApp } from '../../hooks/useDictationApp.ts'
 import type { Settings } from '../../types/study.ts'
 
@@ -33,25 +34,37 @@ export function AudioToolbar(props: Props) {
           value={settings.accent}
           onChange={(e) => {
             stop()
-            setSettings({ ...settings, accent: e.target.value as Settings['accent'] })
+            setSettings({ ...settings, accent: e.target.value as Settings['accent'], voiceURI: '' })
           }}
         >
           <option value="en-GB">英式发音</option>
           <option value="en-US">美式发音</option>
         </select>
       </div>
-      <select
-        className="audio-source-select"
-        aria-label="发音来源"
-        value={settings.audioSource}
-        onChange={(e) => {
-          stop()
-          setSettings({ ...settings, audioSource: e.target.value as Settings['audioSource'] })
-        }}
-      >
-        <option value="local">本地音频</option>
-        <option value="online">在线音频（有道）</option>
-      </select>
+      <div className="audio-source-controls">
+        <select
+          className="audio-source-select"
+          aria-label="发音来源"
+          value={settings.audioSource}
+          onChange={(e) => {
+            stop()
+            setSettings({ ...settings, audioSource: e.target.value as Settings['audioSource'] })
+          }}
+        >
+          <option value="local">本地音频</option>
+          <option value="online">在线音频（有道）</option>
+        </select>
+        {settings.audioSource === 'local' && (
+          <LocalVoiceSelect
+            accent={settings.accent}
+            value={settings.voiceURI}
+            onChange={(voiceURI) => {
+              stop()
+              setSettings({ ...settings, voiceURI })
+            }}
+          />
+        )}
+      </div>
       <span className="toolbar-divider" />
       <select
         className="speed-select"

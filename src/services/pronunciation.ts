@@ -8,7 +8,7 @@ export type SpeechEnvironment = {
   createUtterance: (text: string) => SpeechSynthesisUtterance
   createAudio: (url: string) => HTMLAudioElement
 }
-type PronunciationSettings = Pick<Settings, 'audioSource' | 'accent' | 'rate' | 'repeat'>
+type PronunciationSettings = Pick<Settings, 'audioSource' | 'accent' | 'voiceURI' | 'rate' | 'repeat'>
 type VoiceClock = {
   setTimer: (callback: () => void, delay: number) => ReturnType<typeof setTimeout>
   clearTimer: (timer: ReturnType<typeof setTimeout>) => void
@@ -19,15 +19,21 @@ const voiceClock: VoiceClock = {
 }
 const VOICE_WAIT_MS = 2000
 
-function selectVoice(voices: SpeechSynthesisVoice[], accent: Settings['accent']) {
-  const language = (value: string) => value.toLowerCase().replaceAll('_', '-')
+const language = (value: string) => value.toLowerCase().replaceAll('_', '-')
+
+export function voicesForAccent(voices: SpeechSynthesisVoice[], accent: Settings['accent']) {
   const english = voices.filter((voice) => /^en(?:-|$)/.test(language(voice.lang)))
-  const matches = (voice: SpeechSynthesisVoice) => language(voice.lang) === language(accent)
+  const matching = english.filter((voice) => language(voice.lang) === language(accent))
+  return matching.length ? matching : english
+}
+
+function selectVoice(voices: SpeechSynthesisVoice[], accent: Settings['accent'], voiceURI = '') {
+  const available = voicesForAccent(voices, accent)
   // Browser speech may expose remote voices too; localService is a preference, not a gate.
   return (
-    english.find((voice) => matches(voice) && voice.localService) ??
-    english.find(matches) ??
-    english[0]
+    (voiceURI ? available.find((voice) => voice.voiceURI === voiceURI) : undefined) ??
+    available.find((voice) => language(voice.lang) === language(accent) && voice.localService) ??
+    available[0]
   )
 }
 
@@ -130,7 +136,7 @@ export function createPronunciationPlayer(
         if (currentToken !== token) return
         const next = environment.createUtterance(text)
         utterance = next
-        next.lang = settings.accent
+        next.lang = voice.lang
         next.voice = voice
         next.rate = settings.rate
         next.onend = finish
@@ -142,7 +148,7 @@ export function createPronunciationPlayer(
         synthesis.speak(next)
       }
 
-      const voice = selectVoice(synthesis.getVoices(), settings.accent)
+      const voice = selectVoice(synthesis.getVoices(), settings.accent, settings.voiceURI)
       if (voice) {
         speakVoice(voice)
         return
@@ -160,7 +166,7 @@ export function createPronunciationPlayer(
       }
       const onVoicesChanged = () => {
         if (settled || currentToken !== token) return
-        const loaded = selectVoice(synthesis.getVoices(), settings.accent)
+        const loaded = selectVoice(synthesis.getVoices(), settings.accent, settings.voiceURI)
         if (loaded) {
           cleanup()
           speakVoice(loaded)
@@ -170,7 +176,7 @@ export function createPronunciationPlayer(
       synthesis.addEventListener('voiceschanged', onVoicesChanged)
       timer = clock.setTimer(() => {
         if (settled || currentToken !== token) return
-        const loaded = selectVoice(synthesis.getVoices(), settings.accent)
+        const loaded = selectVoice(synthesis.getVoices(), settings.accent, settings.voiceURI)
         cleanup()
         if (loaded) speakVoice(loaded)
         else fail('暂未获取到英语语音，请稍后重试或切换在线音频。')

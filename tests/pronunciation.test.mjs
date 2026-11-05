@@ -141,6 +141,54 @@ test('browser speech prefers matching local voices and accepts other available E
   }
 })
 
+test('a saved voice overrides the first matching voice and is used for every repeat', () => {
+  const first = { voiceURI: 'first', name: 'First voice', lang: 'en-US', localService: true }
+  const chosen = { voiceURI: 'chosen', name: 'Chosen voice', lang: 'en-US', localService: false }
+  const env = setup([first, chosen])
+  env.player.speak(word, 0, { ...settings, accent: 'en-US', voiceURI: 'chosen', repeat: 2 })
+  assert.equal(env.utterances[0].voice, chosen)
+  assert.equal(env.utterances[0].lang, 'en-US')
+  env.utterances[0].onend()
+  assert.equal(env.utterances[1].voice, chosen)
+})
+
+test('missing or mismatched saved voices fall back to the current accent', () => {
+  const british = { voiceURI: 'british', lang: 'en-GB', localService: true }
+  const american = { voiceURI: 'american', lang: 'en-US', localService: true }
+  const chinese = { voiceURI: 'chinese', lang: 'zh-CN', localService: true }
+  for (const voiceURI of ['', 'removed', 'american', 'chinese']) {
+    const env = setup([american, chinese, british])
+    env.player.speak(word, 0, { ...settings, voiceURI })
+    assert.equal(env.utterances[0].voice, british)
+  }
+})
+
+test('a chosen fallback English voice uses its own language when the requested accent is absent', () => {
+  const canadian = { voiceURI: 'canadian', lang: 'en-CA', localService: true }
+  const american = { voiceURI: 'american', lang: 'en-US', localService: true }
+  const env = setup([american, canadian])
+  env.player.speak(word, 0, { ...settings, voiceURI: 'canadian' })
+  assert.equal(env.utterances[0].voice, canadian)
+  assert.equal(env.utterances[0].lang, 'en-CA')
+})
+
+test('the saved voice is honored when voices arrive asynchronously', () => {
+  const first = { voiceURI: 'first', lang: 'en-GB', localService: true }
+  const chosen = { voiceURI: 'chosen', lang: 'en-GB', localService: true }
+  const env = setup()
+  env.player.speak(word, 0, { ...settings, voiceURI: 'chosen' })
+  env.setVoices([first, chosen])
+  assert.equal(env.utterances[0].voice, chosen)
+  assert.equal(env.listeners.size, 0)
+})
+
+test('a saved local voice does not affect online pronunciation', () => {
+  const env = setup([{ voiceURI: 'chosen', lang: 'en-GB', localService: true }])
+  env.player.speak(word, 0, { ...onlineSettings, voiceURI: 'chosen' })
+  assert.equal(env.utterances.length, 0)
+  assert.equal(env.audios[0].url, dictionaryUrl(word.w, settings.accent))
+})
+
 test('both sources finish after all repeats before advancing continuous playback', () => {
   for (const audioSource of ['local', 'online']) {
     const env = setup([{ lang: 'en-GB', localService: true }])

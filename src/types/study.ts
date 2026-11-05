@@ -25,6 +25,7 @@ export type RecordEntry = {
 export type Settings = {
   audioSource: 'local' | 'online'
   accent: 'en-GB' | 'en-US'
+  voiceURI: string
   rate: number
   auto: boolean
   repeat: number

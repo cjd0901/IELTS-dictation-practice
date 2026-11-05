@@ -3,6 +3,7 @@ import type { Settings } from '../types/study.ts'
 export const DEFAULT_SETTINGS: Settings = {
   audioSource: 'online',
   accent: 'en-GB',
+  voiceURI: '',
   rate: 1,
   auto: false,
   repeat: 1,

@@ -20,12 +20,12 @@ export function usePronunciation(settings: Settings, onFailure: (message: string
     return player.current
   }, [])
   const stopPronunciation = useCallback(() => getPlayer().stop(), [getPlayer])
-  const { audioSource, accent, rate, repeat } = settings
+  const { audioSource, accent, voiceURI, rate, repeat } = settings
   const pronounce = useCallback(
     (word: Word, index: number, onEnd?: () => void) => {
-      getPlayer().speak(word, index, { audioSource, accent, rate, repeat }, onEnd)
+      getPlayer().speak(word, index, { audioSource, accent, voiceURI, rate, repeat }, onEnd)
     },
-    [getPlayer, audioSource, accent, rate, repeat],
+    [getPlayer, audioSource, accent, voiceURI, rate, repeat],
   )
   useEffect(
     () => () => {

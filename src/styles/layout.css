@@ -79,6 +79,34 @@ body,
   min-width: 128px;
 }
 
+.audio-source-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 100%;
+}
+
+.app-shell .local-voice-select {
+  appearance: auto;
+  display: block;
+  overflow: hidden;
+  padding-right: 8px;
+  background-image: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app-shell .local-voice-select::picker(select) {
+  appearance: auto;
+}
+
+.app-shell .audio-source-controls .local-voice-select {
+  width: 210px;
+  min-width: 0;
+  max-width: 100%;
+}
+
 .goal-input-wrap {
   position: relative;
   display: inline-flex;

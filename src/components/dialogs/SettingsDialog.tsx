@@ -4,6 +4,7 @@ import { useState } from 'react'
 import type { Settings } from '../../types/study.ts'
 import { isValidDailyGoal } from '../../utils/settings.ts'
 import { Modal } from '../ui/Modal.tsx'
+import { LocalVoiceSelect } from '../ui/LocalVoiceSelect.tsx'
 
 type Props = Pick<
   DictationApp,
@@ -59,13 +60,27 @@ export function SettingsDialog(props: Props) {
             <option value="online">在线音频（有道）</option>
           </select>
         </label>
+        {settings.audioSource === 'local' && (
+          <label>
+            本地音色
+            <LocalVoiceSelect
+              accent={settings.accent}
+              value={settings.voiceURI}
+              onChange={(voiceURI) => {
+                stop()
+                setSettings({ ...settings, voiceURI })
+              }}
+            />
+          </label>
+        )}
         <label>
           发音口音
           <select
             value={settings.accent}
-            onChange={(e) =>
-              setSettings({ ...settings, accent: e.target.value as Settings['accent'] })
-            }
+            onChange={(e) => {
+              stop()
+              setSettings({ ...settings, accent: e.target.value as Settings['accent'], voiceURI: '' })
+            }}
           >
             <option value="en-GB">英式英语</option>
             <option value="en-US">美式英语</option>
